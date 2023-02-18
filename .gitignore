@@ -1,2 +1,8 @@
 #Ignore all pycache
 */__pycache__ 
+
+#Extra Stuff
+Extras Stuff/
+
+#Ignore secrets
+*.env
