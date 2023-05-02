@@ -1,0 +1,22 @@
+ffmpeg -i toProcess/sample.mp4 -c:v libx264 -crf 22 -maxrate 1M -bufsize 2M -map 0 -f segment -segment_time 00:10:00 -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c:v libx264 -crf 22 -maxrate 1M -bufsize 2M -map 0 -f segment -segment_time 00:10:00 -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv -segment_size 20971520 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c:v libx264 -crf 22 -maxrate 1M -bufsize 2M -map 0 -f segment -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv -segment_time 00:10:00 -segment_format_options movflags=+faststart -segment_list_size 999999 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c:v libx264 -preset slow -b:v 1000k -maxrate 1000k -bufsize 2000k -c:a copy -f segment -segment_time 00:01:00 -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv -segment_size 20971520 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c:v libx264 -preset slow -b:v 1000k -maxrate 1000k -bufsize 2000k -c:a copy -f segment -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv -fs 20971520 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c:v copy -c:a copy -f segment -reset_timestamps 1 -segment_format mp4 -segment_list output_list.txt -segment_list_type csv -fs 20071520 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -c copy -map 0 -segment_time 00:00:03 -f segment -reset_timestamps 1 "processed/output_part%03d.mp4"
+
+
+ffmpeg -i toProcess/sample.mp4 -reset_timestamps 1 -sc_threshold 0 -g 5 -force_key_frames "expr:gte(t, n_forced * 5)" -segment_time 5 -f segment "processed/output_part%03d.mp4"

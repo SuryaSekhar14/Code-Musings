@@ -14,7 +14,7 @@ pg.click(344, 377)
 
 
 while 1:
-    for i in range(1000):
+    for i in range(100000):
         pg.keyDown('w')
         pg.keyUp('w')
 
@@ -25,7 +25,7 @@ while 1:
     for i in range(1000):
         pg.keyDown('s')
         pg.keyUp('s')
-        
+
     for i in range(1000):
         pg.keyDown('d')
         pg.keyUp('d')
