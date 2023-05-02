@@ -11,6 +11,7 @@ VIDEO_EXTENSIONS = (".mp4", ".mov")
 IMAGE_SLICES_ROWS = 2
 IMAGE_SLICES_COLUMNS = 2
 
+
 def split_large_video_files(file_path, processed_dir):
     """
     Split .mp4 and .mov files into multiple parts of 5 seconds each of HD resolution using FFMPEG 
@@ -25,6 +26,13 @@ def split_large_video_files(file_path, processed_dir):
     subprocess.run(cmd)
 
 
+def stitch_video_back_together(file_path):
+    """
+    Stitch the video back together from the parts in the "processed" directory
+    """
+    pass
+
+
 def split_large_image_files(file_path):
     """
     Split an image into 4 parts of equal size and save them in a directory called <filename> in the "processed" directory
@@ -32,6 +40,13 @@ def split_large_image_files(file_path):
     Usage: split_image(image_path, rows, cols, should_square, should_cleanup, [output_dir])
     """
     split_image(file_path, IMAGE_SLICES_ROWS, IMAGE_SLICES_COLUMNS, False, False, False, f"processed/{os.path.splitext(file)[0]}")
+
+
+def stitch_image_back_together(image_path):
+    """
+    Stitch the image back together from the parts in the "processed" directory
+    """
+    pass
 
 
 if __name__ == "__main__":
