@@ -11,10 +11,10 @@ VIDEO_EXTENSIONS = (".mp4", ".mov")
 IMAGE_SLICES_ROWS = 2
 IMAGE_SLICES_COLUMNS = 2
 
-def split_large_video_files(file_path):
+def split_large_video_files(file_path, processed_dir):
     """
     Split .mp4 and .mov files into multiple parts of 5 seconds each of HD resolution using FFMPEG 
-    and save them as .mp4 in a directory called "processed"
+    and save them as .mp4 in a directory called <filename> in the "processed" directory
     """
 
     # use ffmpeg to split the file into parts of 5 seconds each and re-encode the file in 1080p/HD Resolution
@@ -25,11 +25,13 @@ def split_large_video_files(file_path):
     subprocess.run(cmd)
 
 
-def split_images(file_path):
+def split_large_image_files(file_path):
     """
-    Split an image into 4 parts of equal size and save them in a directory called "processed"
+    Split an image into 4 parts of equal size and save them in a directory called <filename> in the "processed" directory
+
+    Usage: split_image(image_path, rows, cols, should_square, should_cleanup, [output_dir])
     """
-    split_image(file_path, IMAGE_SLICES_ROWS, IMAGE_SLICES_COLUMNS, False, False, False, "processed")
+    split_image(file_path, IMAGE_SLICES_ROWS, IMAGE_SLICES_COLUMNS, False, False, False, f"processed/{os.path.splitext(file)[0]}")
 
 
 if __name__ == "__main__":
@@ -44,11 +46,11 @@ if __name__ == "__main__":
         file_path = os.path.join(directory_path, file)
     '''
 
-    # loop through all the files in the directory and check if they have been processed before by checking the processed.txt file else add them to the processed.txt file
+    # loop through all the files in the directory and check if they have been processed before by checking if the folders with the same names exists in the "processed" directory
     for file in os.listdir(directory_path):
         file_path = os.path.join(directory_path, file)
-        processed_video_file_path = os.path.join(processed_dir, f"{os.path.splitext(file)[0]}_part001.mp4")
-        processed_image_file_path = os.path.join(processed_dir, f"{os.path.splitext(file)[0]}_0.jpg")
+        processed_video_file_path = os.path.join(processed_dir, f"{os.path.splitext(file)[0]}")
+        processed_image_file_path = os.path.join(processed_dir, f"{os.path.splitext(file)[0]}")
 
         # check if the file has been processed before
         if os.path.exists(processed_video_file_path):
@@ -61,6 +63,8 @@ if __name__ == "__main__":
 
     # check if the file is an MP4 or MOV file and if it is larger than 20MB
         if file.lower().endswith(VIDEO_EXTENSIONS) and os.path.getsize(file_path) > 20 * 1024 * 1024:
-            split_large_video_files(file_path)
+            os.mkdir(f"processed/{os.path.splitext(file)[0]}")
+            split_large_video_files(file_path, f"processed/{os.path.splitext(file)[0]}")
         elif file.lower().endswith(IMAGE_EXTENSIONS):
-            split_images(file_path)
+            split_large_image_files(file_path)
+

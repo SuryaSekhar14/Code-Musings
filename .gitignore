@@ -7,5 +7,5 @@ Extras Stuff/
 #Ignore secrets
 *.env
 
-#File Break and Upload ignores
-File Break and Upload/toProcess
+#Git Store ignores
+Git Store/toProcess
