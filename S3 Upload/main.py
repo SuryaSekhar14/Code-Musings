@@ -16,5 +16,9 @@ except Exception as e:
 
 # Upload a file to the S3 bucket
 file_name = 'example.txt'
-bucket_name = 'bees-app-media-storage'
-s3.upload_file(file_name, bucket_name, "test.txt")
+bucket_name = 'media.beesbuzz.org'
+try:
+    s3.upload_file(file_name, bucket_name, "test.txt")
+    print("File uploaded")
+except Exception as e:
+    print(e)
