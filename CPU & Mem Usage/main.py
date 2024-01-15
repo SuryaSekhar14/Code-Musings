@@ -7,6 +7,18 @@ import time
 #     time.sleep(1)
 
 def displayUsage(cpu_usage, mem_usage, bars=50):
+    """
+    Displays the CPU and memory usage in a progress bar format.
+
+    Parameters:
+    cpu_usage (float): The CPU usage percentage.
+    mem_usage (float): The memory usage percentage.
+    bars (int): The number of bars in the progress bar (default is 50).
+
+    Returns:
+    None
+    """
+
     cpu_percentage = cpu_usage / 100.0
     mem_percentage = mem_usage / 100.0
 
