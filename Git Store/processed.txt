@@ -9,3 +9,6 @@ wallpaper.jpg
 sample.mp4
 sample_3840x2160.mp4
 wallpaper.jpg
+sample.mp4
+sample_3840x2160.mp4
+wallpaper.jpg

@@ -1,7 +1,7 @@
 import os
-from split_image import split_image
+from split_image import split_image, reverse_split
 import subprocess
-
+import re
 # !!! Make sure FFMPEG is installed and added to PATH variables
 
 directory_path = "toProcess"
@@ -46,7 +46,22 @@ def stitch_image_back_together(image_path):
     """
     Stitch the image back together from the parts in the "processed" directory
     """
-    pass
+    print(os.listdir(f"processed/{image_path}/"))
+
+    start_name, ext = os.path.splitext(image_path)
+    print(start_name, ext)
+    # Find all files that start with the same name as the image,
+    # followed by "_" and a number, and with the same file extension.
+
+    expr = re.compile(r"^" + start_name + "_\d+" + ext + "$")
+    print(expr)
+
+    paths_to_merge = sorted([f for f in os.listdir(
+        f"processed/{image_path}/") if re.match(expr, f)], key=lambda x: int(x.split("_")[-1].split(".")[0]))
+    print(paths_to_merge)
+
+    reverse_split(paths_to_merge, IMAGE_SLICES_ROWS,
+                    IMAGE_SLICES_COLUMNS, image_path, False, False)
 
 
 if __name__ == "__main__":
@@ -83,3 +98,5 @@ if __name__ == "__main__":
         elif file.lower().endswith(IMAGE_EXTENSIONS):
             split_large_image_files(file_path)
 
+
+# stitch_image_back_together("wallpaper.jpg")
